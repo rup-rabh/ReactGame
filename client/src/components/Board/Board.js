@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import './Board.css' ;
+import Attacker from '../Attacker/Attacker'
+import Defender from '../Defender/Defender'
+
 function Board() {
   const [role, setRole] = useState(null);
   const chosenRole =(role)=>{
-    console.log(role);
-      // setRole(role);
+      setRole(role);
   }
 
   if(!role)  {
-    
     return (
       <div className='board'>
           
@@ -19,23 +20,18 @@ function Board() {
               <button className='attackBtn' onClick={()=>{chosenRole('Attacker')}}>Attacker</button>
               <button  className='defendBtn' onClick={()=>{chosenRole('Defender')}}>Defender</button>
         </div>
-      
         <br/><hr/>
-
       </div>
       )
     }
     return(
       <>
         {
-          // role === "Attacker" ? 
-            // <Attacker /> : <Defender />
+          role === "Attacker" ? 
+            <Attacker /> : <Defender />
         }
       </>
     );
-
-
-
 }
   
   export default Board
