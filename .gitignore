@@ -1,0 +1,22 @@
+# Node modules for client
+/client/node_modules/
+
+# If you add a server with node_modules later
+#/server/node_modules/
+
+# Build outputs for both client and server
+/client/build/
+/client/dist/
+/server/build/
+/server/dist/
+
+# Environment files
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/

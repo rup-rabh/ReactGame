@@ -1,0 +1,25 @@
+.board{
+    text-align: center;
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    background-color: var(--yellow);
+    display: flex;
+    flex-direction: column;
+
+}
+.qry{
+    font-size:xx-large;
+    font-weight: 600;
+}
+
+.chooseRole{
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+}
+button{
+    width: 400px;
+    height: 100px;
+    border-radius: 20px;
+}
