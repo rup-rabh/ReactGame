@@ -12,9 +12,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-:root{
+/* :root{
   --dark : #1D2B53;
   --magenta: #7E2553;
   --red:#FF004D;
   --yellow:#FAEF5D;
+} */
+
+:root {
+  /* Base colors */
+  --background: #1a1a1a; /* Dark gray */
+  --text: #ffffff; /* White */
+
+  /* Hacker theme */
+  --attacker-primary: #ff6600; /* Orange */
+  --attacker-background: #333333; /* Dark gray */
+  --attacker-text: #ffffff; /* White */
+
+  /* Defender theme */
+  --defender-primary: #4caf50; /* Green */
+  --defender-background: #e0e0e0; /* Light gray */
+  --defender-text: #333333; /* Dark gray */
+
+  /* Accent colors */
+  --accent-1: #ff4081; /* Pink */
+  --accent-2: #009688; /* Teal */
+  --accent-3: #2196f3; /* Blue */
 }
+

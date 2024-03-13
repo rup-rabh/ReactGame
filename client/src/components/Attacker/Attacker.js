@@ -1,11 +1,21 @@
 import React from 'react'
+import AttackList from '../Data/AttackList.json'
+import "./Attacker.css"
 
-//here I have to add options for Attacker
-//Will ofcourse add money and resources 
 export default function Attacker() {
   return (
-    <div>
-      Hello from Attacker
+    <div className='attacker'>
+      <h1>Attacker Intro: </h1>
+      <p>Choose your attacker type</p>
+      
+      {
+        AttackList.map((item)=>{
+            return(
+            <p className = "atk-item" key = {item.id}>{item.name}</p>
+                    // <AttackItem/>
+            )
+        })
+      }
     </div>
   )
 }

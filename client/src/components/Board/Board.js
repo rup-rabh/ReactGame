@@ -25,12 +25,12 @@ function Board() {
       )
     }
     return(
-      <>
+      <div className='board'>
         {
           role === "Attacker" ? 
             <Attacker /> : <Defender />
         }
-      </>
+      </div>
     );
 }
   
