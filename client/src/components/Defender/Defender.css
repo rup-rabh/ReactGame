@@ -1,14 +1,14 @@
-.attacker{
-    color:var(--attacker-text) ;
-    background-color: var(--attacker-background);
+.defender{
+    color:var(--defender-text) ;
+    background-color: var(--defender-background);
 }
-.attacks{
+.defense{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
 }
 
-.attack-card{
+.defense-card{
     flex-basis: calc(33% - 20px);
     border: 2px solid #ccc;
     border-radius: 8px;
@@ -21,20 +21,20 @@
     justify-content: space-between;
 }
 
-.attack-card .cost {
+.defense-card .cost {
     margin: auto;
     
     width: 50%;
     font-weight: bold;
-    background-color: rgb(255, 81, 0);
+    background-color: rgb(72, 255, 0);
     
     border-radius: 10px;
   }
 
-  .attack-card h3 {
+  .defense-card h3 {
     margin-top: 0;
   }
 
-  .attack-card p {
+  .defense-card p {
     margin: 8px 0;
   }
