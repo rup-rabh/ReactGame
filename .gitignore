@@ -1,5 +1,6 @@
 # Node modules for client
 /client/node_modules/
+/server/node_modules/
 
 # If you add a server with node_modules later
 #/server/node_modules/

@@ -24,6 +24,13 @@ button{
     height: 100px;
     border-radius: 20px;
 }
-h1{
-    
+
+.testing button {
+    all:unset;
+    margin-left:10px ;
+
+    width: 100px;
+    background-color: rgb(118, 0, 104);
+    border-radius: 5px;
+    vertical-align: middle;
 }
