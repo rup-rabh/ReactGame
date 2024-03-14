@@ -17,8 +17,8 @@ function Board() {
         <h1>Strategic interaction between Attacker and Defender in Cyber-Security</h1>
         <p className='qry'>You are playing as: </p>
         <div  className='chooseRole'>
-              <button className='attackBtn' onClick={()=>{chosenRole('Attacker')}}>Attacker</button>
-              <button  className='defendBtn' onClick={()=>{chosenRole('Defender')}}>Defender</button>
+              <button className='attackBtn rolebtn' onClick={()=>{chosenRole('Attacker')}}>Attacker</button>
+              <button  className='defendBtn rolebtn' onClick={()=>{chosenRole('Defender')}}>Defender</button>
         </div>
         <br/><hr/>
       </div>
