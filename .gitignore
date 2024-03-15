@@ -1,6 +1,6 @@
 # Node modules for client
 /client/node_modules/
-/server/node_modules/
+/Server/node_modules/
 
 # If you add a server with node_modules later
 #/server/node_modules/
@@ -8,8 +8,8 @@
 # Build outputs for both client and server
 /client/build/
 /client/dist/
-/server/build/
-/server/dist/
+/Server/build/
+/Server/dist/
 
 # Environment files
 .env
