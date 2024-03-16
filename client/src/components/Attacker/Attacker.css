@@ -1,6 +1,7 @@
 .attacker{
     color:var(--attacker-text) ;
     background-color: var(--attacker-background);
+ 
 }
 .attacks{
     display: flex;
@@ -20,9 +21,12 @@
     flex-direction: column;
     justify-content: space-between;
     transition: box-shadow 0.4s ease;
+    border: 5px solid red;
+    border-image: linear-gradient(rgb(208, 0, 255), red) 1 round;
+    border-image-width: 2px;
 }
 .attack-card:hover {
-  box-shadow: 0 4px 10px rgb(0, 242, 255);
+  box-shadow: 0 5px 10px rgb(0, 242, 255);
 }
 .attack-card .cost {
     margin: auto;

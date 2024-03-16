@@ -29,9 +29,9 @@ code {
   --attacker-background: #333333; /* Dark gray */
   --attacker-text: #ffffff; /* White */
 
-  /* Defender theme */
-  --defender-primary: #4caf50; /* Green */
-  --defender-background: #00fffb; /* Light gray */
+  /* Defender theme */  
+  --defender-primary: #f7ff5a; /* Green */
+  --defender-background: #ff4d9d; /* Light gray */
   --defender-text: #333333; /* Dark gray */
 
   /* Accent colors */
