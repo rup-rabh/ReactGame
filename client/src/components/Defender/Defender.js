@@ -3,14 +3,17 @@ import "./Defender.css"
 import DefenseList from "../../Data/DefendList.json"
 import { useEffect,useState } from "react";
 import io from 'socket.io-client'
+import Quiz from '../Quiz/Quiz';
 
 const socket = io.connect("http://localhost:3001")
 //here I have to add options for Defender
-function DefenseItem({item}){
-    
+function DefenseItem({item,handleSelected}){
+
+
     return (
-        <div className="defense-card">
-            <div className='name'><h3>Name : {item.name}</h3></div>
+        <div className="defense-card" onClick={() =>handleSelected(item.id)}
+        > 
+            <div className='name'><h3>{item.id}. Name : {item.name}</h3></div>
             <div className='description'>description: <p>
                 {item.description}
                 </p></div>
@@ -21,9 +24,23 @@ function DefenseItem({item}){
 function Defender() {
     const [message,setMessage]=useState('');
     const [messageRecieved,setMessageRecieved]=useState('');
+    const [selected,setSelected] = useState(0) ;
+    const [next , setNext]=useState(false)
+    const handleSelected = (id)=>{
+
+        setSelected(id);
+    }
     const sendMessage  = () =>{
       socket.emit("send_message",{message}); //since both key and value are same
     };
+
+    const handleNext = ()=> {
+        if(selected){
+            setNext((state)=>true);
+        }else{
+            alert("Select option")
+        }
+    }
   
     useEffect(()=>{
       socket.on("recieve_message",(data)=>{
@@ -31,28 +48,50 @@ function Defender() {
       })
     })
     return (
+
         <div className='defender'>
-            <h1>Defender Intro: </h1>
-            <p>Choose your Defense type</p>
-            <div className='defense'>
-                {
-                DefenseList.map((item)=>{
-                    return(
-                        <DefenseItem 
-                        key={item.id} 
-                        item = {item}    
-                        />
-                        )
+            {
+                next===false?(
+            
+            <div>
+                <h1>Defender Intro: </h1>
+                <p>Choose your Defense type</p>
+                <div className='defense'>
+                    {
+                        DefenseList.map((item)=>{
+                            return(
+                                <DefenseItem 
+                                key={item.id} 
+                                item = {item}
+                                handleSelected={handleSelected}
+                                />
+                            )
                         })
+                    }
+                </div>
+            </div>):(
+                <div className='defense'>
+                    <Quiz />
+                </div>
+            )
                 }
-            </div>
-            <div className='testing'>
+            <div className='sideHUD' >
+                <div className='chat' style={{color:"lightgreen"}}>
+
                 <input placeholder='Message...' onChange={(event)=>{
                     setMessage(event.target.value);
                 }}/>
                 <button className='test-btn' onClick={sendMessage}>Send</button>
-                <h2>Message:</h2>
+                <h4>Message:</h4>
                 {messageRecieved}
+                </div>
+
+                <div className='goToQz' onClick={handleNext}>
+                    <h3>Next    </h3>
+                    Selected:{selected}
+                    
+                    </div>
+
             </div>
 
         </div>

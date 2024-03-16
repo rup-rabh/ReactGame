@@ -33,6 +33,9 @@ export default function Attacker() {
     })
   return (
     <div className='attacker'>
+
+        <div>
+
         <h1>Attacker Intro: </h1>
         <p>Choose your attacker type</p>
         <div className='attacks'>
@@ -47,14 +50,20 @@ export default function Attacker() {
                     })
             }
         </div>
-        <div className='testing'>
+        </div>
+        <div className='sideHUD' >
+                <div className='chat' style={{color:"lightgreen"}}>
+
                 <input placeholder='Message...' onChange={(event)=>{
                     setMessage(event.target.value);
                 }}/>
-                <button className='test-btn' onClick={sendMessage}>Send </button>
-                
+                <button className='test-btn' onClick={sendMessage}>Send</button>
                 <h2>Message:</h2>
                 {messageRecieved}
+                </div>
+                <div className='goToQz'>
+                    Next
+                </div>
             </div>
     </div>
   )

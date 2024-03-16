@@ -3,11 +3,15 @@
     /* background-color: var(--defender-background); */
     /* background-image: linear-gradient(to bottom right, rgb(89, 0, 255), rgb(255, 0, 255)); */
     background-image: radial-gradient(circle, rgb(0, 255, 200), rgb(111, 0, 128));
+    display: flex;
+
+    
   }
 .defense{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    flex:9    
 }
 
 .defense-card{
@@ -29,9 +33,12 @@
   
 
 }
+
 .defense-card:hover {
   box-shadow: 0 20px 20px rgb(0, 0, 0);
 }
+
+
 .defense-card .cost {
     margin: auto;
     
@@ -49,3 +56,32 @@
   .defense-card p {
     margin: 8px 0;
   }
+
+  /* SideHud */
+  .sideHUD{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+    position: relative;
+    /* top:50%; */
+    right: 0;
+    flex: 1;
+  }
+
+  .goToQz{
+
+    /* height: 40px; */
+    /* padding: 10px; */
+    color: brown;
+    background-color:rgb(255, 133, 220);
+    border: 5px solid red;
+    border-image: linear-gradient(blue, red) 1;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    
+  }
+
+
+.goToQz:hover{
+  background-color: rgb(106, 0, 255);
+}
