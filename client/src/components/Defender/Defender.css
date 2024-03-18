@@ -29,7 +29,7 @@
     /* border: 10px solid transparent;
     border-image: url("../../Data/UI/demoBI.png") 30% round; */
     border: 5px solid red;
-  border-image: linear-gradient(blue, red) 1;
+    border-image: linear-gradient(blue, red) 1;
   
 
 }

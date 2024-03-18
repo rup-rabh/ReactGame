@@ -27,7 +27,6 @@ function Defender() {
     const [selected,setSelected] = useState(0) ;
     const [next , setNext]=useState(false)
     const handleSelected = (id)=>{
-
         setSelected(id);
     }
     const sendMessage  = () =>{
@@ -90,7 +89,7 @@ function Defender() {
                     <h3>Next    </h3>
                     Selected:{selected}
                     
-                    </div>
+                </div>
 
             </div>
 

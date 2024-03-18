@@ -9,6 +9,7 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    flex:9 
 }
 
 .attack-card{
@@ -46,4 +47,31 @@
 
   .attack-card p {
     margin: 8px 0;
+  }
+
+  .sideHUD{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+    position: relative;
+    /* top:50%; */
+    right: 0;
+    flex: 1;
+  }
+
+
+  .goToQz{
+
+    /* height: 40px; */
+    /* padding: 10px; */
+    color: brown;
+    background-color:rgb(255, 133, 220);
+    border: 5px solid red;
+    border-image: linear-gradient(blue, red) 1;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    
+  }
+  .goToQz:hover{
+    background-color: rgb(106, 0, 255);
   }
