@@ -26,7 +26,7 @@ io.on("connection",(socket)=>{
 })
 
 app.post('/quizSubmit',(req,res)=>{
-    console.log(res);
+    console.log("worked");
 })
 
 server.listen(3001,()=>{

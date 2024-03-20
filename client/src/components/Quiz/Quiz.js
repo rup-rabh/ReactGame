@@ -13,7 +13,7 @@ export default function Quiz() {
             <br/>Note that you both need to select same quiz subject for fair evaluation</p>
             </div>
             
-            <form action="/quizSubmit" method="post">
+            <form action="http://localhost:3001/quizSubmit" method="post">
                 <label for="sub">Choose Subject:</label>
                 <select>
                     <option value="9">General Knowledge</option>
