@@ -6,6 +6,7 @@ const {Server} = require("socket.io")
 const cors = require("cors")
 app.use(cors());
 const server  = http.createServer(app);
+app.use(express.urlencoded({ extended: true }));
 
 const io = new Server(server, {
     cors: {
@@ -26,7 +27,7 @@ io.on("connection",(socket)=>{
 })
 
 app.post('/quizSubmit',(req,res)=>{
-    console.log("worked");
+    console.log(req.body.subject);
 })
 
 server.listen(3001,()=>{

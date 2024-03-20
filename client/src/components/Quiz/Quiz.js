@@ -14,8 +14,8 @@ export default function Quiz() {
             </div>
             
             <form action="http://localhost:3001/quizSubmit" method="post">
-                <label for="sub">Choose Subject:</label>
-                <select>
+                <label htmlFor="sub">Choose Subject:</label>
+                <select name="subject">
                     <option value="9">General Knowledge</option>
                     <option value="10">Entertainment: Books</option>
                     <option value="11">Entertainment: Film</option>
