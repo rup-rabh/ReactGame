@@ -5,10 +5,9 @@ import { useEffect,useState } from "react";
 import io from 'socket.io-client'
 import Quiz from '../Quiz/Quiz';
 
-const socket = io.connect("http://localhost:3001")
+// const socket = io.connect("http://localhost:3001")
 //here I have to add options for Defender
 function DefenseItem({item,handleSelected}){
-
 
     return (
         <div className="defense-card" onClick={() =>handleSelected(item.id)}
@@ -22,17 +21,18 @@ function DefenseItem({item,handleSelected}){
     )
 }
 function Defender() {
+    const [socket,setSocket] = useState(null);
     const [message,setMessage]=useState('');
     const [messageRecieved,setMessageRecieved]=useState('');
     const [selected,setSelected] = useState(0) ;
-    const [next , setNext]=useState(false)
+    const [next , setNext]=useState(false);
+
     const handleSelected = (id)=>{
         setSelected(id);
     }
     const sendMessage  = () =>{
       socket.emit("send_message",{message}); //since both key and value are same
     };
-
     const handleNext = ()=> {
         if(selected){
             setNext((state)=>true);
@@ -40,12 +40,18 @@ function Defender() {
             alert("Select option")
         }
     }
-  
     useEffect(()=>{
-      socket.on("recieve_message",(data)=>{
-          setMessageRecieved(data.message);
-      })
-    })
+        const newSocket = io.connect("http://localhost:3001");
+        setSocket(newSocket);
+    },[])
+
+    useEffect(()=>{
+        if(socket){
+            socket.on("recieve_message",(data)=>{
+            setMessageRecieved(data.message);
+            })
+        }
+    },[socket])
     return (
 
         <div className='defender'>
