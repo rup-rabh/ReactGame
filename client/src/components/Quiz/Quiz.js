@@ -41,6 +41,7 @@ export default function Quiz() {
                     <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
                     <option value="32">Entertainment: Cartoon &amp; Animations</option>
                 </select>
+                <button type='sumbit'>Go</button>
             </form>
             <div className="quiz-area">
 
