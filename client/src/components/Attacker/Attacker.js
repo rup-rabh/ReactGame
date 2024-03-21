@@ -22,7 +22,6 @@ function AttackItem({item,handleSelected}){
     )
 }
 export default function Attacker({socket,roomId}) {
-    // const [socket,setSocket] = useState(null);
     const [message,setMessage]=useState('');
     const [messageRecieved,setMessageRecieved]=useState('');
     const [selected,setSelected] = useState(0) ;
@@ -32,7 +31,7 @@ export default function Attacker({socket,roomId}) {
         setSelected(id);
     }
     const sendMessage  = () =>{
-      socket.emit("send_message",{message}); //since both key and value are same
+      socket.emit("send_message",{message,roomId}); //since both key and value are same
     };
     const handleNext = ()=> {
         if(selected){

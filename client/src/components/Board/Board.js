@@ -11,6 +11,7 @@ function Board() {
   const chosenRole =(role)=>{
     if(roomId){
       setRole(role);
+      
     }else{
       alert('First Join or Create room')
     }
@@ -21,14 +22,18 @@ function Board() {
   },[])
   const handleCreateRoom=(roomNo)=>{
     if(roomNo){
-    console.log(roomNo);}
+    // console.log(roomNo);
+    socket.emit('join_room',{room: roomId , role});
+  }
     else{
       alert("Enter room number")
     }
   }
   const handleJoinRoom=(roomNo)=>{
     if(roomNo){
-      console.log(roomNo);}
+      // console.log(roomNo);
+      socket.emit('join_room',{room: roomId , role});
+    }
       else{
         alert("Enter room number")
       }

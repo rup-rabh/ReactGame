@@ -31,7 +31,7 @@ function Defender({socket,roomId}) {
         setSelected(id);
     }
     const sendMessage  = () =>{
-      socket.emit("send_message",{message}); //since both key and value are same
+      socket.emit("send_message",{message,roomId}); //since both key and value are same
     };
     const handleNext = ()=> {
         if(selected){
