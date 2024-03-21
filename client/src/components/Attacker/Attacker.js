@@ -21,7 +21,7 @@ function AttackItem({item,handleSelected}){
         </div>
     )
 }
-export default function Attacker({socket}) {
+export default function Attacker({socket,roomId}) {
     // const [socket,setSocket] = useState(null);
     const [message,setMessage]=useState('');
     const [messageRecieved,setMessageRecieved]=useState('');
@@ -41,10 +41,7 @@ export default function Attacker({socket}) {
             alert("Select option")
         }
     }
-    // useEffect(()=>{
-    //     const newSocket = io.connect("http://localhost:3001");
-    //     setSocket(newSocket);
-    // },[])
+
 
     useEffect(()=>{
         if(socket){

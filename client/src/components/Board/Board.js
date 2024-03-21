@@ -7,20 +7,46 @@ import io from 'socket.io-client'
 function Board() {
   const [socket,setSocket] = useState(null);
   const [role, setRole] = useState(null);
+  const[roomId,setRoomId]=useState(null);
   const chosenRole =(role)=>{
+    if(roomId){
       setRole(role);
+    }else{
+      alert('First Join or Create room')
+    }
   }
   useEffect(()=>{
     const newSocket = io.connect("http://localhost:3001");
     setSocket(newSocket);
   },[])
+  const handleCreateRoom=(roomNo)=>{
+    if(roomNo){
+    console.log(roomNo);}
+    else{
+      alert("Enter room number")
+    }
+  }
+  const handleJoinRoom=(roomNo)=>{
+    if(roomNo){
+      console.log(roomNo);}
+      else{
+        alert("Enter room number")
+      }
+  }
 
-  if(!role)  {
+  if(!role || !roomId)  {
     return (
       <div className='board'>
           
         <h1>Welcome to the game of  </h1>
         <h1>Strategic interaction between Attacker and Defender in Cyber-Security</h1>
+        <div className='room'>
+          <input placeholder='Enter Room ID' onChange={(event)=>setRoomId(event.target.value)} />
+          <div className='roomButtons'>
+              <button onClick={()=>handleJoinRoom(roomId)}>Join Room</button>
+              <button onClick={()=>handleCreateRoom(roomId)}>Create Room</button>
+          </div>
+        </div>
         <p className='qry'>You are playing as: </p>
         <div  className='chooseRole'>
               <button className='attackBtn rolebtn' onClick={()=>{chosenRole('Attacker')}}>Attacker</button>
@@ -31,10 +57,12 @@ function Board() {
       )
     }
     return(
+      
       <div className='board'>
+        
         {
           role === "Attacker" ? 
-            <Attacker socket={socket}/> : <Defender socket={socket}/>
+            <Attacker socket={socket} roomId={roomId}/> : <Defender socket={socket} roomId={roomId}/>
         }
       </div>
     );
