@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import './Board.css' ;
 import Attacker from '../Attacker/Attacker'
 import Defender from '../Defender/Defender'
+import io from 'socket.io-client'
 
 function Board() {
+  const [socket,setSocket] = useState(null);
   const [role, setRole] = useState(null);
   const chosenRole =(role)=>{
       setRole(role);
   }
+  useEffect(()=>{
+    const newSocket = io.connect("http://localhost:3001");
+    setSocket(newSocket);
+  },[])
 
   if(!role)  {
     return (
@@ -28,7 +34,7 @@ function Board() {
       <div className='board'>
         {
           role === "Attacker" ? 
-            <Attacker /> : <Defender />
+            <Attacker socket={socket}/> : <Defender socket={socket}/>
         }
       </div>
     );

@@ -2,7 +2,7 @@ import React from 'react'
 import "./Defender.css"
 import DefenseList from "../../Data/DefendList.json"
 import { useEffect,useState } from "react";
-import io from 'socket.io-client'
+// import io from 'socket.io-client'
 import Quiz from '../Quiz/Quiz';
 
 // const socket = io.connect("http://localhost:3001")
@@ -20,8 +20,8 @@ function DefenseItem({item,handleSelected}){
         </div>
     )
 }
-function Defender() {
-    const [socket,setSocket] = useState(null);
+function Defender({socket}) {
+    // const [socket,setSocket] = useState(null);
     const [message,setMessage]=useState('');
     const [messageRecieved,setMessageRecieved]=useState('');
     const [selected,setSelected] = useState(0) ;
@@ -40,10 +40,10 @@ function Defender() {
             alert("Select option")
         }
     }
-    useEffect(()=>{
-        const newSocket = io.connect("http://localhost:3001");
-        setSocket(newSocket);
-    },[])
+    // useEffect(()=>{
+    //     const newSocket = io.connect("http://localhost:3001");
+    //     setSocket(newSocket);
+    // },[])
 
     useEffect(()=>{
         if(socket){

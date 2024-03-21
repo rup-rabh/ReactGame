@@ -2,7 +2,7 @@ import React from 'react'
 import AttackList from '../../Data/AttackList.json'
 import "./Attacker.css"
 import { useEffect,useState } from "react";
-import io from 'socket.io-client'
+
 import Quiz from '../Quiz/Quiz';
 
 // const socket = io.connect("http://localhost:3001")
@@ -21,8 +21,8 @@ function AttackItem({item,handleSelected}){
         </div>
     )
 }
-export default function Attacker() {
-    const [socket,setSocket] = useState(null);
+export default function Attacker({socket}) {
+    // const [socket,setSocket] = useState(null);
     const [message,setMessage]=useState('');
     const [messageRecieved,setMessageRecieved]=useState('');
     const [selected,setSelected] = useState(0) ;
@@ -41,10 +41,10 @@ export default function Attacker() {
             alert("Select option")
         }
     }
-    useEffect(()=>{
-        const newSocket = io.connect("http://localhost:3001");
-        setSocket(newSocket);
-    },[])
+    // useEffect(()=>{
+    //     const newSocket = io.connect("http://localhost:3001");
+    //     setSocket(newSocket);
+    // },[])
 
     useEffect(()=>{
         if(socket){

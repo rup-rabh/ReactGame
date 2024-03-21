@@ -1,7 +1,4 @@
 import { useEffect } from 'react';
-import io from 'socket.io-client'
-
-
 
 export default function Quiz({socket}) {
     const handleSubmit = (e) =>{
