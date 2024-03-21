@@ -76,7 +76,7 @@ function Defender() {
                 </div>
             </div>):(
                 <div className='defense'>
-                    <Quiz />
+                    <Quiz socket={socket}/>
                 </div>
             )
                 }

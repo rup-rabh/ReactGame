@@ -76,7 +76,7 @@ export default function Attacker() {
             </div>
         </div>  ):(
                 <div className='defense'>
-                    <Quiz />
+                    <Quiz socket={socket}/>
                 </div>
             )
         
@@ -91,7 +91,7 @@ export default function Attacker() {
                 <h2>Message:</h2>
                 {messageRecieved}
                 </div>
-                <div className='goToQz' onClick={handleNext}>
+                <div className='goToQz' onClick={handleNext} >
                     <h3>Next    </h3>
                     Selected:{selected}
                 </div>

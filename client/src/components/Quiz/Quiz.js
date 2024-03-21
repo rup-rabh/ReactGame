@@ -1,8 +1,15 @@
+import { useEffect } from 'react';
 import io from 'socket.io-client'
-const socket = io.connect("http://localhost:3001")
 
 
-export default function Quiz() {
+
+export default function Quiz({socket}) {
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+    }
+    useEffect(()=>{
+
+    },[socket])    
 
     return (
         <div className="quiz">
@@ -13,7 +20,8 @@ export default function Quiz() {
             <br/>Note that you both need to select same quiz subject for fair evaluation</p>
             </div>
             
-            <form action="http://localhost:3001/quizSubmit" method="post">
+            {/* <form action="http://localhost:3001/quizSubmit" method="post" >  */}
+            <form onSubmit = {handleSubmit} > 
                 <label htmlFor="sub">Choose Subject:</label>
                 <select name="subject">
                     <option value="9">General Knowledge</option>
@@ -41,7 +49,7 @@ export default function Quiz() {
                     <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
                     <option value="32">Entertainment: Cartoon &amp; Animations</option>
                 </select>
-                <button type='sumbit'>Go</button>
+                <button type='sumbit' >Go</button>
             </form>
             <div className="quiz-area">
 
