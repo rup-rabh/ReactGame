@@ -1,0 +1,19 @@
+.quiz{
+    width:80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    
+    height: 100vh;
+}
+
+.choose-subject{
+    font-size: 2em;
+}
+select{
+    font-size: 0.7em;
+}
+.subject-selection-button button{
+    font-size: 1em;
+    margin-top: 5px;
+}

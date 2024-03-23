@@ -1,24 +1,27 @@
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
+import Question from './Question/Question';
+import './Quiz.css'
 export default function Quiz({socket,roomId,role,selected}) {
+    const [startQuiz,setStartQuiz] = useState(false);
     const handleSubmit = (e) =>{        
+        setStartQuiz(true);                 
         e.preventDefault();
         const quizValue = e.target.subject.value;
         socket.emit("request_quiz",{quizValue,roomId,role,selected});
+        
     }
     useEffect(()=>{
         socket.on("load_quiz",(data)=>{
             console.log(data);
         })
     },[socket])
-
+    if(!startQuiz){
     return (
-        <div className="quiz">
-
+        <div className="quiz choose-subject">
             <h1>Quiz</h1>
             <div className="quiz-intro">
-                <p>Text your opponent and negotiate one topic,after which the quiz score will determine the effective of your chosen strategy in previous state
-            <br/>Note that you both need to select same quiz subject for fair evaluation</p>
+                <p>Text your opponent and negotiate one topic,after which the quiz score will determine the effectiveness of your chosen strategy in previous state
+            <br/>Note: that you both need to select same quiz subject for fair evaluation</p>
             </div>
             
             <form onSubmit = {handleSubmit} > 
@@ -49,13 +52,22 @@ export default function Quiz({socket,roomId,role,selected}) {
                     <option value="31">Entertainment: Japanese Anime &amp; Manga</option>
                     <option value="32">Entertainment: Cartoon &amp; Animations</option>
                 </select>
-                <button type='sumbit' >Go</button>
+                <div className='subject-selection-button'>
+                    <button type='sumbit' >Go</button>
+                </div>
             </form>
-            <div className="quiz">
-                <h1>Quiz Area : </h1>
-                <div className='quiz-area'></div>
-            </div>
+
         </div>
         
-    )
+    )}else{
+        return(
+        <div className="quiz">
+            <h1>Quiz Area : </h1>
+            <div className='quiz-area'>
+                <Question/>
+
+            </div> 
+        </div>
+        )
+    }
 }

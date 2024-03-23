@@ -1,0 +1,13 @@
+.question{
+    font-size: 1.5em;
+}
+.options{
+    margin-top: 5px;
+    display: flex;
+    gap:5%;
+    justify-content: center;
+}
+
+.option{
+    flex-basis: calc(25% - 20px);
+}
