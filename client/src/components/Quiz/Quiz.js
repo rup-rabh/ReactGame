@@ -4,13 +4,26 @@ import './Quiz.css'
 export default function Quiz({socket,roomId,role,selected}) {
     const [startQuiz,setStartQuiz] = useState(false);
     const  [questions, setQuestions] = useState([]);
+    const [answers, setAnswers] = useState([]);
+    const [isClicked, setIsClicked] = useState(false);
     const handleSubmit = (e) =>{        
         setStartQuiz(true);                 
         e.preventDefault();
         const quizValue = e.target.subject.value;
         socket.emit("request_quiz",{quizValue,roomId,role,selected});
-        
     }
+    const handleChange = (e)=>{
+        var  temp=[...answers];
+        temp[e.target.name] = e.target.value;
+        setAnswers(temp);
+    }
+    const handleQuizSubmit = (e)=>{
+        setIsClicked(true);
+        e.preventDefault();
+        // console.log(answers);//working
+        socket.emit("quizSubmit",{answers})
+    }
+
     useEffect(()=>{
         socket.on("load_quiz",(data)=>{
             // console.log(data);
@@ -66,11 +79,22 @@ export default function Quiz({socket,roomId,role,selected}) {
         <div className="quiz">
             <div className='quiz-area'>
             <h1>Quiz Area : </h1>
-            {
-                questions.map((el,index)=>{
-                    return <Question key={index} question={el.question} options={el.options} />
-                })
-            }
+            <form onSubmit={handleQuizSubmit}>
+                {
+                    questions.map((el,index)=>{
+                        return (
+                        <Question 
+                        key={index} 
+                        question={el.question} 
+                        options={el.options} 
+                        id={index} 
+                        handleChange={handleChange}
+                        />
+                        );
+                    })
+                }
+                <button type = "submit" disabled={isClicked}>Submit quiz</button>
+            </form>
             </div>
         </div>
         )

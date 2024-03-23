@@ -1,5 +1,5 @@
 .quiz{
-    width:80%;
+    width:85%;
     margin: auto;
     display: flex;
     flex-direction: column;
@@ -20,5 +20,15 @@ select{
 
 .quiz-area{
     overflow-y: auto;
-    max-height: 700px;
+    max-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.quiz-area button{
+    width: 150px;
+    font-size: large;
+    margin: auto;
+    background-color: yellowgreen;
 }

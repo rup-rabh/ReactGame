@@ -1,18 +1,30 @@
 import React from 'react'
 import './Question.css'
-function Question({question,options}) {
+import he from 'he';
+function Question({question,options,id,handleChange}) {
 
   return (
-    <div >
-      <div className='question'>{question}</div>
+    <>
+    _________________________________________________________________
+      <div className='question'>{he.decode(question)}</div>
       <div className='options'>
         {
             options.map((el,index)=>{
-                return <div className='option' key={index}>{el}</div>
+                return <div className='option' key={index}>
+                    <input 
+                        name ={(id).toString()} 
+                        type='radio' 
+                        onChange={handleChange}
+                        value={index} 
+                        required 
+                    />
+                    <label >{he.decode(el)} </label>
+                </div>
             })
         }
       </div>
-    </div>
+
+    </>
   )
 }
 
