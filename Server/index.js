@@ -62,8 +62,25 @@ io.on("connection",(socket)=>{
     })
 
     socket.on("request_quiz",(data)=>{ // handling quiz request 
-        
-        const apiUrl = `https://opentdb.com/api.php?amount=10&category=${data.quizValue}&difficulty=easy&type=multiple`;
+        var amt = 7;
+        var dif = 'easy';
+        switch (data.selected) {
+            case 2:
+                amt = 7;dif='medium'
+                break;
+            case 3:
+                amt=10;dif='medium';
+                break;
+            case 4:
+                amt=7;dif='hard';
+                break;
+            case 5:
+                amt=10;dif='hard';
+                break;
+            default:
+                break;
+        }
+        const apiUrl = `https://opentdb.com/api.php?amount=${amt}&category=${data.quizValue}&difficulty=${dif}`;
         
         axios.get(apiUrl).then((res)=>{
             const quizSend = quizFormat(res.data);
@@ -76,12 +93,11 @@ io.on("connection",(socket)=>{
         console.log(data);//
     })
     socket.on('quizSubmit',(data)=>{
-        console.log(data.answers);
-        console.log(userScore(ans,data.answers));
+        // console.log(data.answers);//working
+        console.log(`score: ${userScore(ans,data.answers)}`);
     })
 
 })
-
 
 server.listen(3001,()=>{
     console.log("Server is running...")
