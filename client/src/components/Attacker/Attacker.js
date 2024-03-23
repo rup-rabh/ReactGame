@@ -52,7 +52,7 @@ export default function Attacker({socket,roomId}) {
 
   return (
     <div className='attacker'>
-        {            
+        {
         next===false?(
         <div>
             <h1>Attacker Intro: </h1>
@@ -72,7 +72,7 @@ export default function Attacker({socket,roomId}) {
             </div>
         </div>  ):(
                 <div className='defense'>
-                    <Quiz socket={socket}/>
+                    <Quiz socket={socket} roomId={roomId} role={"Attacker"} selected={selected}/>
                 </div>
             )
         

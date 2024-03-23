@@ -6,7 +6,6 @@ import { useEffect,useState } from "react";
 import Quiz from '../Quiz/Quiz';
 
 // const socket = io.connect("http://localhost:3001")
-//here I have to add options for Defender
 function DefenseItem({item,handleSelected}){
 
     return (
@@ -41,7 +40,6 @@ function Defender({socket,roomId}) {
         }
     }
 
-
     useEffect(()=>{
         if(socket){
             socket.on("recieve_message",(data)=>{
@@ -49,12 +47,11 @@ function Defender({socket,roomId}) {
             })
         }
     },[socket])
-    return (
 
+    return (
         <div className='defender'>
             {
                 next===false?(
-            
             <div>
                 <h1>Defender Intro: </h1>
                 <p>Choose your Defense type</p>
@@ -73,7 +70,7 @@ function Defender({socket,roomId}) {
                 </div>
             </div>):(
                 <div className='defense'>
-                    <Quiz socket={socket}/>
+                    <Quiz socket={socket} roomId={roomId} role={"Defender"} selected={selected}/>
                 </div>
             )
                 }
@@ -83,6 +80,7 @@ function Defender({socket,roomId}) {
                 <input placeholder='Message...' onChange={(event)=>{
                     setMessage(event.target.value);
                 }}/>
+
                 <button className='test-btn' onClick={sendMessage}>Send</button>
                 <h4>Message:</h4>
                 {messageRecieved}
@@ -91,11 +89,8 @@ function Defender({socket,roomId}) {
                 <div className='goToQz' onClick={handleNext}>
                     <h3>Next    </h3>
                     Selected:{selected}
-                    
                 </div>
-
             </div>
-
         </div>
       )
 }

@@ -1,23 +1,26 @@
 import { useEffect } from 'react';
 
-export default function Quiz({socket}) {
-    const handleSubmit = (e) =>{
+export default function Quiz({socket,roomId,role,selected}) {
+    const handleSubmit = (e) =>{        
         e.preventDefault();
+        const quizValue = e.target.subject.value;
+        socket.emit("request_quiz",{quizValue,roomId,role,selected});
     }
     useEffect(()=>{
-
-    },[socket])    
+        socket.on("load_quiz",(data)=>{
+            console.log(data);
+        })
+    },[socket])
 
     return (
         <div className="quiz">
 
             <h1>Quiz</h1>
             <div className="quiz-intro">
-                <p>Text your opponent and negotiate one topic,after which the quiz score for will determine the effective of your chosen strategy in previous state
+                <p>Text your opponent and negotiate one topic,after which the quiz score will determine the effective of your chosen strategy in previous state
             <br/>Note that you both need to select same quiz subject for fair evaluation</p>
             </div>
             
-            {/* <form action="http://localhost:3001/quizSubmit" method="post" >  */}
             <form onSubmit = {handleSubmit} > 
                 <label htmlFor="sub">Choose Subject:</label>
                 <select name="subject">
@@ -48,8 +51,9 @@ export default function Quiz({socket}) {
                 </select>
                 <button type='sumbit' >Go</button>
             </form>
-            <div className="quiz-area">
-
+            <div className="quiz">
+                <h1>Quiz Area : </h1>
+                <div className='quiz-area'></div>
             </div>
         </div>
         

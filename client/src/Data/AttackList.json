@@ -13,15 +13,15 @@
       },
       {
         "id": 3,
-        "name": "DDoS Attack",
-        "description": "Overwhelm the target system with a flood of internet traffic, rendering it unavailable to users.",
-        "cost": 30
-      },
-      {
-        "id": 4,
         "name": "SQL Injection",
         "description": "Exploit a vulnerability in a web application to execute malicious SQL queries.",
         "cost": 25
+      },
+      {
+        "id": 4,
+        "name": "DDoS Attack",
+        "description": "Overwhelm the target system with a flood of internet traffic, rendering it unavailable to users.",
+        "cost": 30
       },
       {
         "id": 5,
