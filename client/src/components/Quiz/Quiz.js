@@ -3,6 +3,7 @@ import Question from './Question/Question';
 import './Quiz.css'
 export default function Quiz({socket,roomId,role,selected}) {
     const [startQuiz,setStartQuiz] = useState(false);
+    const  [questions, setQuestions] = useState([]);
     const handleSubmit = (e) =>{        
         setStartQuiz(true);                 
         e.preventDefault();
@@ -12,7 +13,8 @@ export default function Quiz({socket,roomId,role,selected}) {
     }
     useEffect(()=>{
         socket.on("load_quiz",(data)=>{
-            console.log(data);
+            // console.log(data);
+            setQuestions(data);
         })
     },[socket])
     if(!startQuiz){
@@ -62,11 +64,14 @@ export default function Quiz({socket,roomId,role,selected}) {
     )}else{
         return(
         <div className="quiz">
-            <h1>Quiz Area : </h1>
             <div className='quiz-area'>
-                <Question/>
-
-            </div> 
+            <h1>Quiz Area : </h1>
+            {
+                questions.map((el,index)=>{
+                    return <Question key={index} question={el.question} options={el.options} />
+                })
+            }
+            </div>
         </div>
         )
     }

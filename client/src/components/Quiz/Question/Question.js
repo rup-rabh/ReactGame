@@ -1,11 +1,10 @@
 import React from 'react'
 import './Question.css'
-function Question() {
-    const options = ["Jamal","Rahul","Anthony","Jotharo"];
-    // const options = ["Jamal","Rahul"];
+function Question({question,options}) {
+
   return (
-    <div>
-      <div className='question'>Who Killed the fifth person on 1945 while on boat at a lake of Boston while eating a pizza with his legs and forgot to breath?</div>
+    <div >
+      <div className='question'>{question}</div>
       <div className='options'>
         {
             options.map((el,index)=>{

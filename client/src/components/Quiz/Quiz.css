@@ -17,3 +17,8 @@ select{
     font-size: 1em;
     margin-top: 5px;
 }
+
+.quiz-area{
+    overflow-y: auto;
+    max-height: 700px;
+}
