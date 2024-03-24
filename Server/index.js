@@ -30,7 +30,7 @@ function quizFormat(data){
         quizData.options = options
         return  {'question':el.question,'options':options}
     })
-    console.log(ans);
+    // console.log(ans);
     return formattedQuiz;
 }
 
@@ -56,6 +56,7 @@ io.on("connection",(socket)=>{
 
     socket.on("join_room",(data)=>{//handling joining room
         socket.join(data.room); //can access role too here
+        
     })
 
     socket.on("send_message",(data)=>{//handling chat
@@ -89,9 +90,10 @@ io.on("connection",(socket)=>{
             const quizSend = quizFormat(res.data);
             //console.log(ans);//working
             room = data.roomId;
-            socket.emit("load_quiz",quizSend); //emitting to requested socket only
+            socket.emit("load_quiz",{quizSend,response:0}); //emitting to requested socket only
         }).catch((err)=>{
-            console.log(err.data);
+            socket.emit("load_quiz",{quizSend:[] ,response:5});
+            // console.log(err.response.data);
         })
         // console.log(data);//working = quiz request data
     })

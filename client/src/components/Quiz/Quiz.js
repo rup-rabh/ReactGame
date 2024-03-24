@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import Question from './Question/Question';
 import './Quiz.css'
 export default function Quiz({socket,roomId,role,selected}) {
-    const [startQuiz,setStartQuiz] = useState(false);
-    const  [questions, setQuestions] = useState([]);
+    // const [startQuiz,setStartQuiz] = useState(false);
+    const  [questions, setQuestions] = useState(null);
     const [answers, setAnswers] = useState([]);
     const [isClicked, setIsClicked] = useState(false);
     const handleSubmit = (e) =>{        
-        setStartQuiz(true);                 
+        // setStartQuiz(true);                 
         e.preventDefault();
         const quizValue = e.target.subject.value;
         socket.emit("request_quiz",{quizValue,roomId,role,selected});
@@ -27,10 +27,15 @@ export default function Quiz({socket,roomId,role,selected}) {
     useEffect(()=>{
         socket.on("load_quiz",(data)=>{
             // console.log(data);
-            setQuestions(data);
+            if(data.response===0 ){
+            setQuestions(data.quizSend);}
+            else{
+                alert("Wait atleast 5 seconds, the QuizApi takes time");
+                // console.log(data.response);
+            }
         })
     },[socket])
-    if(!startQuiz){
+    if(!questions){
     return (
         <div className="quiz choose-subject">
             <h1>Quiz</h1>
