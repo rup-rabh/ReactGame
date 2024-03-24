@@ -30,6 +30,7 @@ function quizFormat(data){
         quizData.options = options
         return  {'question':el.question,'options':options}
     })
+    console.log(ans);
     return formattedQuiz;
 }
 
@@ -38,6 +39,8 @@ function userScore(scoreKeeper,userAnswer){
     for (let index = 0; index < scoreKeeper.length; index++) {
         score +=(scoreKeeper[index] == userAnswer[index])
     }
+    // console.log(scoreKeeper);//working
+    // console.log(userAnswer);//working
     return score;
 }
 
@@ -82,17 +85,17 @@ io.on("connection",(socket)=>{
         }
         const apiUrl = `https://opentdb.com/api.php?amount=${amt}&category=${data.quizValue}&difficulty=${dif}`;
         
-        axios.get(apiUrl).then((res)=>{
+        axios.get(apiUrl).then((res)=>{ //fethcing quiz
             const quizSend = quizFormat(res.data);
             //console.log(ans);//working
             room = data.roomId;
-            socket.emit("load_quiz",quizSend);
+            socket.emit("load_quiz",quizSend); //emitting to requested socket only
         }).catch((err)=>{
-            console.log(err);
+            console.log(err.data);
         })
-        console.log(data);//
+        // console.log(data);//working = quiz request data
     })
-    socket.on('quizSubmit',(data)=>{
+    socket.on('quizSubmit',(data)=>{  //calculating score
         // console.log(data.answers);//working
         console.log(`score: ${userScore(ans,data.answers)}`);
     })

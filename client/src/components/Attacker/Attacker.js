@@ -71,7 +71,7 @@ export default function Attacker({socket,roomId}) {
                 }
             </div>
         </div>  ):(
-                <div className='attack'>
+                <div className='attacks'>
                     <Quiz socket={socket} roomId={roomId} role={"Attacker"} selected={selected}/>
                 </div>
             )

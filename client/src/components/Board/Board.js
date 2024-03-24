@@ -7,7 +7,7 @@ import io from 'socket.io-client'
 function Board() {
   const [socket,setSocket] = useState(null);
   const [role, setRole] = useState(null);
-  const[roomId,setRoomId]=useState(null);
+  const[roomId,setRoomId]=useState(null); 
   const chosenRole =(role)=>{
     if(roomId){
       setRole(role);
