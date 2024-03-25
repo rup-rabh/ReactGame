@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Question from './Question/Question';
 import './Quiz.css'
+import Engagement from '../Engagement/Engagement';
 export default function Quiz({socket,roomId,role,selected}) {
     // const [startQuiz,setStartQuiz] = useState(false);
     const  [questions, setQuestions] = useState(null);
@@ -80,6 +81,7 @@ export default function Quiz({socket,roomId,role,selected}) {
         </div>
         
     )}else{
+        if(!isClicked){
         return(
         <div className="quiz">
             <div className='quiz-area'>
@@ -103,5 +105,12 @@ export default function Quiz({socket,roomId,role,selected}) {
             </div>
         </div>
         )
+    } else {
+        return(
+            <>
+                <Engagement/>
+            </>
+        )
+    }
     }
 }

@@ -87,10 +87,15 @@ export default function Attacker({socket,roomId}) {
                 <h2>Message:</h2>
                 {messageRecieved}
                 </div>
+                {
+                    next===false?(
+
                 <div className='goToQz' onClick={handleNext} >
                     <h3>Next    </h3>
                     Selected:{selected}
                 </div>
+                    ):""
+                }
             </div>
     </div>
   )

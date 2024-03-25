@@ -86,10 +86,15 @@ function Defender({socket,roomId}) {
                 {messageRecieved}
                 </div>
 
-                <div className='goToQz' onClick={handleNext}>
+                {
+                    next===false?(
+
+                <div className='goToQz' onClick={handleNext} >
                     <h3>Next    </h3>
                     Selected:{selected}
                 </div>
+                    ):""
+                }
             </div>
         </div>
       )
