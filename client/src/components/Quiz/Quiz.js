@@ -8,7 +8,7 @@ export default function Quiz({socket,roomId,role,selected}) {
     const [answers, setAnswers] = useState([]);
     const [isClicked, setIsClicked] = useState(false);
     const handleSubmit = (e) =>{        
-        // setStartQuiz(true);                 
+        // setStartQuiz(true);
         e.preventDefault();
         const quizValue = e.target.subject.value;
         socket.emit("request_quiz",{quizValue,roomId,role,selected});
@@ -45,7 +45,7 @@ export default function Quiz({socket,roomId,role,selected}) {
             <br/>Note: that you both need to select same quiz subject for fair evaluation</p>
             </div>
             
-            <form onSubmit = {handleSubmit} > 
+            <form onSubmit = {handleSubmit}>
                 <label htmlFor="sub">Choose Subject:</label>
                 <select name="subject">
                     <option value="9">General Knowledge</option>
@@ -106,11 +106,11 @@ export default function Quiz({socket,roomId,role,selected}) {
         </div>
         )
     } else {
-        return(
-            <>
-                <Engagement/>
-            </>
-        )
-    }
+            return(
+                <>
+                    <Engagement/>
+                </>
+            )
+        }
     }
 }

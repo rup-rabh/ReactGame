@@ -9,7 +9,7 @@ const server  = http.createServer(app);
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 var ans=[];
-
+////////////////////////shuffling answers///////////////////////////////////////////////////////
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -17,6 +17,7 @@ function shuffleArray(array) {
     }
     return array;
   }
+  /////////////////////Formatting quiz for client's request////////////////////////////////
 function quizFormat(data){
     const quizData = data.results //is a list of objects
     ans = [];
@@ -33,7 +34,7 @@ function quizFormat(data){
     // console.log(ans);
     return formattedQuiz;
 }
-
+//////////////////////////Calculating score of quiz for giving  answer of user/////////////////////
 function userScore(scoreKeeper,userAnswer){
     var score = 0;
     for (let index = 0; index < scoreKeeper.length; index++) {
@@ -44,19 +45,30 @@ function userScore(scoreKeeper,userAnswer){
     return score;
 }
 
+//////////////////////Setting server with cors////////////////////////////////
 const io = new Server(server, {
     cors: {
         origin:"http://localhost:3000",
         methods: ["GET", "POST"]
     }
 })
-
+////////////////////////Socket Connections//////////////////////////////////
 io.on("connection",(socket)=>{
     console.log(`User connected : ${socket.id}`);
 
     socket.on("join_room",(data)=>{//handling joining room
-        socket.join(data.room); //can access role too here
-        
+        // data contans room as well as role
+        skt = io.sockets.adapter.rooms.get(data.room);
+        // console.log( skt); // before connection room info
+        if(!skt || skt.size < 2){
+            socket.join(data.room); //can access role too here
+            socket.emit("err_join",{response:1});
+        }else{
+            socket.emit("err_join",{response:0});
+        }
+        skt = io.sockets.adapter.rooms.get(data.room);
+        console.log(skt)// before connection room info
+       
     })
 
     socket.on("send_message",(data)=>{//handling chat
@@ -104,6 +116,8 @@ io.on("connection",(socket)=>{
 
 })
 
+
+///////////////Backend running
 server.listen(3001,()=>{
     console.log("Server is running...")
 })

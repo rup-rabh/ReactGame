@@ -29,10 +29,18 @@ function Board() {
       alert("Enter room number")
     }
   }
+
   const handleJoinRoom=(roomNo)=>{
     if(roomNo){
       // console.log(roomNo);
       socket.emit('join_room',{room: roomId , role});
+      socket.on("err_join",(data)=>{
+        if(data.response !==1){
+          alert("This Room is full! Try another one.");
+          window.location.reload(); // reload on full room
+        }
+      })
+      
     }
       else{
         alert("Enter room number")
