@@ -9,6 +9,8 @@ const server  = http.createServer(app);
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 var ans=[];
+var score = [];
+
 ////////////////////////shuffling answers///////////////////////////////////////////////////////
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -44,6 +46,9 @@ function userScore(scoreKeeper,userAnswer){
     // console.log(userAnswer);//working
     return score;
 }
+function calculateTotalScore(){
+    return score.reduce((acc,currVal)=>acc+currVal,0);
+}
 
 //////////////////////Setting server with cors////////////////////////////////
 const io = new Server(server, {
@@ -59,12 +64,16 @@ io.on("connection",(socket)=>{
     socket.on("join_room",(data)=>{//handling joining room
         // data contans room as well as role
         skt = io.sockets.adapter.rooms.get(data.room);
-        // console.log( skt); // before connection room info
-        if(!skt || skt.size < 2){
-            socket.join(data.room); //can access role too here
+        // console.log(skt); // before connection room info
+        if(!skt || skt.size < 2){//handling user count in room
+            //eligible to enter 
+            /////////////////not handling alternative users right now///////////////////////
+            socket.join(data.room);
+            socket.role =data.role; //setting role
+            socket.room =data.room; //setting room
             socket.emit("err_join",{response:1});
         }else{
-            socket.emit("err_join",{response:0});
+            socket.emit("err_join",{response:0});   
         }
         skt = io.sockets.adapter.rooms.get(data.room);
         console.log(skt)// before connection room info
@@ -111,9 +120,26 @@ io.on("connection",(socket)=>{
     })
     socket.on('quizSubmit',(data)=>{  //calculating score
         // console.log(data.answers);//working
-        console.log(`score: ${userScore(ans,data.answers)}`);
+        socket.score =  userScore(ans,data.answers) // calculating score
+        console.log(`score: ${socket.score}`);
+        // io.to(socket.room).emit('showScore',{score:socket.score , role:socket.role});
+        score.push(socket.score);
+    
+        socket.emit('showScore',{score : socket.score,winPercentage:null });
+        if(score.length==2){
+            io.to(socket.room).emit('startCountdown',{});
+            console.log(score);
+        }
     })
-
+    socket.on('showResult',(data)=>{  //finding win percentage
+        if(score.length==2){
+            const totalScore = calculateTotalScore();
+            socket.winPercentage = (socket.score / totalScore)*100;
+            socket.emit('showWinP',{status:1,winP:socket.winPercentage });
+        }else{
+            socket.emit('showWinP',{status:0,winP:null });
+        }
+    })
 })
 
 

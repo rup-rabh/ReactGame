@@ -108,7 +108,7 @@ export default function Quiz({socket,roomId,role,selected}) {
     } else {
             return(
                 <>
-                    <Engagement/>
+                    <Engagement socket={socket}/>
                 </>
             )
         }
