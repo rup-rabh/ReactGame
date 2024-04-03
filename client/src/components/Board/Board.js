@@ -3,7 +3,7 @@ import './Board.css' ;
 import Attacker from '../Attacker/Attacker'
 import Defender from '../Defender/Defender'
 import io from 'socket.io-client'
-
+//want to do power styles now
 function Board() {
   const [socket,setSocket] = useState(null);
   const [role, setRole] = useState(null);
