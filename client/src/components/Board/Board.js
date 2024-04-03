@@ -20,19 +20,11 @@ function Board() {
     const newSocket = io.connect("http://localhost:3001");
     setSocket(newSocket);
   },[])
-  const handleCreateRoom=(roomNo)=>{
-    if(roomNo){
-    // console.log(roomNo);
-    socket.emit('join_room',{room: roomId , role});
-  }
-    else{
-      alert("Enter room number")
-    }
-  }
 
   const handleJoinRoom=(roomNo)=>{
+    console.log("triigered roomhanle func");
     if(roomNo){
-      // console.log(roomNo);
+      
       socket.emit('join_room',{room: roomId , role});
       socket.on("err_join",(data)=>{
         if(data.response !==1){
@@ -54,10 +46,10 @@ function Board() {
         <h1>Welcome to the game of  </h1>
         <h1>Strategic interaction between Attacker and Defender in Cyber-Security</h1>
         <div className='room'>
-          <input placeholder='Enter Room ID' onChange={(event)=>setRoomId(event.target.value)} />
+          <input placeholder='Enter Room ID' onChange={(event)=>{setRoomId(event.target.value);}} />
           <div className='roomButtons'>
               <button onClick={()=>handleJoinRoom(roomId)}>Join Room</button>
-              <button onClick={()=>handleCreateRoom(roomId)}>Create Room</button>
+              {/* <button onClick={()=>handleCreateRoom(roomId)}>Create Room</button> */}
           </div>
         </div>
         <p className='qry'>You are playing as: </p>

@@ -64,7 +64,7 @@ io.on("connection",(socket)=>{
     socket.on("join_room",(data)=>{//handling joining room
         // data contans room as well as role
         skt = io.sockets.adapter.rooms.get(data.room);
-        // console.log(skt); // before connection room info
+        console.log(skt); // before connection room info    
         if(!skt || skt.size < 2){//handling user count in room
             //eligible to enter 
             /////////////////not handling alternative users right now///////////////////////
