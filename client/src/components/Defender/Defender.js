@@ -3,7 +3,6 @@ import "./Defender.css"
 import DefenseList from "../../Data/DefendList.json"
 import { useEffect,useState } from "react";
 // import io from 'socket.io-client'    
-import Quiz from '../Quiz/Quiz';
 
 // const socket = io.connect("http://localhost:3001")
 function DefenseItem({item,handleSelected}){
@@ -70,7 +69,7 @@ function Defender({socket,roomId}) {
                 </div>
             </div>):(
                 <div className='defense'>
-                    <Quiz socket={socket} roomId={roomId} role={"Defender"} selected={selected}/>
+                    damn idk what to do here
                 </div>
             )
                 }

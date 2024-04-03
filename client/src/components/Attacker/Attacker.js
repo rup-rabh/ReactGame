@@ -3,7 +3,6 @@ import AttackList from '../../Data/AttackList.json'
 import "./Attacker.css"
 import { useEffect,useState } from "react";
 
-import Quiz from '../Quiz/Quiz';
 
 // const socket = io.connect("http://localhost:3001")
 
@@ -72,7 +71,7 @@ export default function Attacker({socket,roomId}) {
             </div>
         </div>  ):(
                 <div className='attacks'>
-                    <Quiz socket={socket} roomId={roomId} role={"Attacker"} selected={selected}/>
+                    damn idk what to do here
                 </div>
             )
         
