@@ -2,14 +2,14 @@ import React from 'react'
 import "./Defender.css"
 import DefenseList from "../../Data/DefendList.json"
 import { useEffect,useState } from "react";
+import Duel from '../Duel/Duel';
 // import io from 'socket.io-client'    
 
 // const socket = io.connect("http://localhost:3001")
-function DefenseItem({item,handleSelected}){
+function DefenseItem({item,handleSelected,duelClicked}){
 
     return (
-        <div className="defense-card" onClick={() =>handleSelected(item.id)}
-        > 
+        <div className="defense-card" onClick={() =>{ if(!duelClicked)handleSelected(item.id)}}> 
             <div className='name'><h3>{item.id}. Name : {item.name}</h3></div>
             <div className='description'>description: <p>
                 {item.description}
@@ -24,6 +24,10 @@ function Defender({socket,roomId}) {
     const [messageRecieved,setMessageRecieved]=useState('');
     const [selected,setSelected] = useState(0) ;
     const [next , setNext]=useState(false);
+    const [round,setRound] = useState(0);
+
+    const [duelClicked,setDuelClicked] = useState(false);
+    const [score,setScore]=useState([]);
 
     const handleSelected = (id)=>{
         setSelected(id);
@@ -31,20 +35,25 @@ function Defender({socket,roomId}) {
     const sendMessage  = () =>{
       socket.emit("send_message",{message,roomId}); //since both key and value are same
     };
-    const handleNext = ()=> {
-        if(selected){
-            setNext((state)=>true);
-        }else{
-            alert("Select option")
+
+    const handleDuel = () =>{
+        if(selected===0){ 
+            alert('select option');
         }
+        else{
+        setDuelClicked(true);
+        socket.emit('duel',{selected,round});
+        }
+
     }
 
     useEffect(()=>{
         if(socket){
             socket.on("recieve_message",(data)=>{
             setMessageRecieved(data.message);
-            })
+            });
         }
+
     },[socket])
 
     return (
@@ -62,15 +71,24 @@ function Defender({socket,roomId}) {
                                 key={item.id} 
                                 item = {item}
                                 handleSelected={handleSelected}
+                                setDuelClicked={setDuelClicked}
                                 />
                             )
                         })
                     }
                 </div>
+                <Duel 
+                score={score} 
+                setScore={setScore} 
+                socket={socket}
+                round={round}
+                setRound = {setRound}
+                setDuelClicked={setDuelClicked}
+                setNext = {setNext}
+                next = {next}
+                />
             </div>):(
-                <div className='defense'>
-                    damn idk what to do here
-                </div>
+                ""
             )
                 }
             <div className='sideHUD' >
@@ -88,10 +106,10 @@ function Defender({socket,roomId}) {
                 {
                     next===false?(
 
-                <div className='goToQz' onClick={handleNext} >
-                    <h3>Next    </h3>
+                <button className='goToQz' onClick={handleDuel} disabled={duelClicked} >
+                    <h3>Duel    </h3>
                     Selected:{selected}
-                </div>
+                </button>
                     ):""
                 }
             </div>

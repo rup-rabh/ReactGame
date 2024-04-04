@@ -1,0 +1,16 @@
+.roundResult{
+    
+    color: rgb(242, 255, 182);
+    width: 50% ;
+    margin: auto;
+    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 1.3em;
+}
+
+.won{
+    background-color: green;
+}
+.lost{
+    background-color: red;
+}

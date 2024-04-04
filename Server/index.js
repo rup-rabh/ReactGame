@@ -8,31 +8,38 @@ const server  = http.createServer(app);
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
-var ans=[];
-var score = [];
 
-////////////////////////shuffling answers///////////////////////////////////////////////////////
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-  /////////////////////Formatting quiz for client's request////////////////////////////////
+var round = {};
+var cumScore = {};
+const payOff = [{min:0,max:0},{min:25,max:75},{min:30,max:50},{min:50,max:80}];
 
-//////////////////////////Calculating score of quiz for giving  answer of user/////////////////////
-function userScore(scoreKeeper,userAnswer){
-    var score = 0;
-    for (let index = 0; index < scoreKeeper.length; index++) {
-        score +=(scoreKeeper[index] == userAnswer[index])
+//////////////////////////Evaluating round score winner etc/////////////////////
+function determinRoundWinner(round){
+    const keys = Object.keys(round);
+    const fP = keys[0];
+    const sP = keys[1];
+    if (round[fP] > round[sP]){
+        return  [fP,sP];
+    }else if (round[fP] < round[sP]){
+        return [sP,fP];
+    } else {   
+        rno =  Math.floor(Math.random()*2)
+        return [keys[rno],keys[1-rno]]; //if it's a tie, randomly choose one
     }
-    // console.log(scoreKeeper);//working
-    // console.log(userAnswer);//working
-    return score;
 }
-function calculateTotalScore(){
-    return score.reduce((acc,currVal)=>acc+currVal,0);
+
+function determineWinner(cumScore){
+    const keys = Object.keys(cumScore);
+    const fP = keys[0];
+    const sP = keys[1];
+    if (cumScore[fP] > cumScore[sP]){
+        return  [fP,sP];
+    }else if (cumScore[fP] < cumScore[sP]){
+        return [sP,fP];
+    } else {   
+        rno =  Math.floor(Math.random()*2)
+        return [keys[rno],keys[1-rno]]; //if it's a tie, randomly choose one
+    }
 }
 
 //////////////////////Setting server with cors////////////////////////////////
@@ -49,14 +56,17 @@ io.on("connection",(socket)=>{
     socket.on("join_room",(data)=>{//handling joining room
         // data contans room as well as role
         skt = io.sockets.adapter.rooms.get(data.room);
-        console.log(skt); // before connection room info    
+        // before connection room info
+        console.log("Room joined");
         if(!skt || skt.size < 2){//handling user count in room
-            //eligible to enter 
-            /////////////////not handling alternative users right now///////////////////////
+            //eligible to enter
+            /////////////////not handling corresponding users right now///////////////////////
             socket.join(data.room);
             socket.role =data.role; //setting role
             socket.room =data.room; //setting room
             socket.emit("err_join",{response:1});
+            socket.score = 1000; //initializing score
+            cumScore[socket.id]  = 1000; //adding player id to the global array of scores
         }else{
             socket.emit("err_join",{response:0});   
         }
@@ -71,8 +81,37 @@ io.on("connection",(socket)=>{
         socket.to(room).emit("recieve_message", data);
     })
 
-   
+    socket.on("duel",(data)=>{
+        // console.log(data.selected); // working
+        ind = data.selected;
+        randomScore =Math.floor((Math.random() * (payOff[ind].max - payOff[ind].min)) + payOff[ind].min);
+        round[socket.id] = randomScore;
+        socket.score += randomScore;
 
+        if(Object.keys(round).length === 2){
+            const winner = determinRoundWinner(round)[0];
+            const  looser = determinRoundWinner(round)[1];
+            cumScore[winner]+= round[winner];
+            cumScore[looser]+=  round[looser];
+            
+            
+            io.to(winner).emit("roundResult",{win:1,score:cumScore[winner],roundScore :  round[winner] });
+            io.to(looser).emit("roundResult", { win : 0 , score : cumScore[looser] , roundScore : round[looser]}) ;
+            console.log(`round winner:${winner}`);
+            console.log(`round looser:${looser}`);
+            round = {};
+        }
+    });
+    socket.on("endGame",(data)=>{
+        keys = Object.keys(cumScore);
+        const winner = determineWinner(cumScore)[0];
+        const looser = determineWinner(cumScore)[1];
+        io.to(winner).emit("finResult",{win:1});
+        io.to(looser).emit("finResult", {win:0});
+        console.log(`match winner: ${winner}`);
+        console.log(`match looser: ${looser}`);
+    })
+    
 
 })
 

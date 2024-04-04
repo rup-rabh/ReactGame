@@ -7,7 +7,7 @@
       },
       {
         "id": 2,
-        "name": "Two-Factor Authentication (2FA)",
+        "name": "Two-Factor Auth(2FA)",
         "description": "Require users to authenticate using two different factors, such as a password and a one-time code.",
         "cost": 15
       },
@@ -16,18 +16,6 @@
         "name": "Firewall",
         "description": "Implement a firewall to monitor and control incoming and outgoing network traffic.",
         "cost": 20
-      },
-      {
-        "id": 4,
-        "name": "Encryption",
-        "description": "Encrypt sensitive data to protect it from unauthorized access.",
-        "cost": 25
-      },
-      {
-        "id": 5,
-        "name": "Intrusion Detection System (IDS)",
-        "description": "Deploy an IDS to monitor and analyze network traffic for signs of unauthorized access or malicious activity.",
-        "cost": 30
       }
 ]
   

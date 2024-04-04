@@ -22,7 +22,7 @@ function Board() {
   },[])
 
   const handleJoinRoom=(roomNo)=>{
-    console.log("triigered roomhanle func");
+    // console.log("triigered roomhanle func");
     if(roomNo){
       
       socket.emit('join_room',{room: roomId , role});
