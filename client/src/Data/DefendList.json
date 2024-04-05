@@ -3,19 +3,19 @@
         "id": 1,
         "name": "Regular Security Audits",
         "description": "Conduct regular security audits to identify and address vulnerabilities in the system.",
-        "cost": 10
+        "cost": "<25 50 75>"
       },
       {
         "id": 2,
         "name": "Two-Factor Auth(2FA)",
         "description": "Require users to authenticate using two different factors, such as a password and a one-time code.",
-        "cost": 15
+        "cost": "<30 40 50>"
       },
       {
         "id": 3,
         "name": "Firewall",
         "description": "Implement a firewall to monitor and control incoming and outgoing network traffic.",
-        "cost": 20
+        "cost": "<50 65 80>"
       }
 ]
   

@@ -3,19 +3,19 @@
         "id": 1,
         "name": "Phishing Attack",
         "description": "Trick the target into revealing sensitive information through deceptive means.",
-        "cost": 10
+        "cost": "<25 50 75>"
       },
       {
         "id": 2,
         "name": "Brute Force Attack",
         "description": "Attempt to gain unauthorized access by trying all possible combinations of usernames and passwords.",
-        "cost": 20
+        "cost": "<30 40 50>"
       },
       {
         "id": 3,
         "name": "SQL Injection",
         "description": "Exploit a vulnerability in a web application to execute malicious SQL queries.",
-        "cost": 25
+        "cost": "<50 65 80>"
       }
 
     ]

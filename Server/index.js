@@ -12,7 +12,8 @@ app.use(express.urlencoded({ extended: true }));
 var round = {};
 var cumScore = {};
 const payOff = [{min:0,max:0},{min:25,max:75},{min:30,max:50},{min:50,max:80}];
-
+const tot_rounds = 5;
+var gameAnalysis = {};
 //////////////////////////Evaluating round score winner etc/////////////////////
 function determinRoundWinner(round){
     const keys = Object.keys(round);
@@ -65,8 +66,9 @@ io.on("connection",(socket)=>{
             socket.role =data.role; //setting role
             socket.room =data.room; //setting room
             socket.emit("err_join",{response:1});
-            socket.score = 1000; //initializing score
-            cumScore[socket.id]  = 1000; //adding player id to the global array of scores
+            socket.score = 100; //initializing score
+            cumScore[socket.id]  = socket.score; //adding player id to the global array of scores
+            gameAnalysis[socket.id]=[0];
         }else{
             socket.emit("err_join",{response:0});   
         }
@@ -92,26 +94,44 @@ io.on("connection",(socket)=>{
             const winner = determinRoundWinner(round)[0];
             const  looser = determinRoundWinner(round)[1];
             cumScore[winner]+= round[winner];
-            cumScore[looser]+=  round[looser];
+            cumScore[looser]-=  round[looser];
             
             
             io.to(winner).emit("roundResult",{win:1,score:cumScore[winner],roundScore :  round[winner] });
             io.to(looser).emit("roundResult", { win : 0 , score : cumScore[looser] , roundScore : round[looser]}) ;
+            
             console.log(`round winner:${winner}`);
             console.log(`round looser:${looser}`);
+            gameAnalysis[winner] = [...gameAnalysis[winner],[round[winner],round[looser]] ];
+            gameAnalysis[looser] = [...gameAnalysis[looser],[round[looser],round[winner]] ];
             round = {};
         }
+        if(data.round === tot_rounds){
+            keys = Object.keys(cumScore);
+            const winner = determineWinner(cumScore)[0];
+            const looser = determineWinner(cumScore)[1];
+            io.to(winner).emit("finResult",{win:1});
+            io.to(looser).emit("finResult", {win:0});
+            console.log(`match winner: ${winner}`);
+            console.log(`match looser: ${looser}`);
+            gameAnalysis[winner] = [...gameAnalysis[winner],[cumScore[winner],cumScore[looser]] ];
+            gameAnalysis[looser] = [...gameAnalysis[looser],[cumScore[looser],cumScore[winner]] ];
+            gameAnalysis[winner][0]=1; // winner code
+        }
+
     });
-    socket.on("endGame",(data)=>{
-        keys = Object.keys(cumScore);
-        const winner = determineWinner(cumScore)[0];
-        const looser = determineWinner(cumScore)[1];
-        io.to(winner).emit("finResult",{win:1});
-        io.to(looser).emit("finResult", {win:0});
-        console.log(`match winner: ${winner}`);
-        console.log(`match looser: ${looser}`);
+    // socket.on("endGame",(data)=>{
+    //     keys = Object.keys(cumScore);
+    //     const winner = determineWinner(cumScore)[0];
+    //     const looser = determineWinner(cumScore)[1];
+    //     io.to(winner).emit("finResult",{win:1});
+    //     io.to(looser).emit("finResult", {win:0});
+    //     console.log(`match winner: ${winner}`);
+    //     console.log(`match looser: ${looser}`);
+    // })
+    socket.on("analysis",(data)=>{
+        socket.emit("analysisSend",gameAnalysis[socket.id]);
     })
-    
 
 })
 

@@ -3,7 +3,7 @@ import AttackList from '../../Data/AttackList.json'
 import "./Attacker.css"
 import { useEffect,useState } from "react";
 import Duel from '../Duel/Duel'
-
+import GameAnalysis from '../gameAnalysis/GameAnalysis';
 // const socket = io.connect("http://localhost:3001")
 
 // id , name , description , cost
@@ -28,7 +28,7 @@ export default function Attacker({socket,roomId}) {
     const [round,setRound] = useState(0);
     const [duelClicked,setDuelClicked] = useState(false);
     const [score,setScore]=useState([]);
-
+    const [gameAnalysis, setGameAnalysis] = useState(null);
     const handleSelected = (id)=>{
         setSelected(id);
     }
@@ -45,12 +45,18 @@ export default function Attacker({socket,roomId}) {
             socket.emit('duel',{selected,round});
         }
     }
-
+    const handleAnalysis = ()=>{
+        socket.emit( "analysis",{});
+    }
 
     useEffect(()=>{
         if(socket){
             socket.on("recieve_message",(data)=>{
             setMessageRecieved(data.message);
+            })
+            socket.on("analysisSend",(data)=>{
+                // console.log(data);
+                setGameAnalysis(data);
             })
         }
     },[socket])
@@ -88,7 +94,12 @@ export default function Attacker({socket,roomId}) {
             />
 
         </div>  ):(
-                ""
+            <div className='analysis'>
+
+                <h1 >Game Over</h1>
+                <button onClick={handleAnalysis}>Game Analysis</button>
+                <GameAnalysis gameAnalysis={gameAnalysis}/>
+            </div>
             )
         
         }
@@ -106,11 +117,13 @@ export default function Attacker({socket,roomId}) {
                     next===false?(
 
                 <button className='goToQz' onClick={handleDuel} disabled={duelClicked}>
-                    <h3>Duel    </h3>
+                    <h3>{round ===5? "Result": "Duel"}    </h3>
                     Selected:{selected}
                 </button>
+                
                     ):""
                 }
+                
             </div>
     </div>
   )

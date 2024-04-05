@@ -1,0 +1,12 @@
+.winner{
+    font-size: 2em;
+    margin-bottom: 100px;
+}
+.totalScore{
+    padding: 10px;
+    background-color: rgb(51, 241, 241);
+    width: 50%;
+    margin: auto;
+    margin-top: 40px;
+    color: black;
+}

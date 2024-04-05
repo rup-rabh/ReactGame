@@ -1,11 +1,12 @@
 import React, { useEffect,useState } from 'react';
 import './Duel.css';
 export default function Duel({score, setScore ,socket,round,setRound,setDuelClicked ,setNext,next}) {
-  const [resultReq, setResultReq] =  useState(false);
+  // const [resultReq, setResultReq] =  useState(false);
   const [resultShown, setResultShown] =  useState(false);
   useEffect( () => {  
     if(socket){
       socket.on("roundResult",(data)=>{
+        console.log("triggered");
         setRound(prev=>{return prev+1});
         setScore((state)=>{
           return ([...state, {
@@ -14,34 +15,46 @@ export default function Duel({score, setScore ,socket,round,setRound,setDuelClic
               win:data.win,
               }]);
         })
-        if(!resultReq){
+        if(!resultShown){
           setDuelClicked(false);
+        }else{
+          setDuelClicked(true);
         }
+        // setDuelClicked(false);
+
+        // if(!resultReq){
+        //   setDuelClicked(false);
+        // }
       });
     }
-  },[socket,setRound,setScore,setDuelClicked,resultReq]);
-  const roundNumbers = 5;
+  },[socket,setRound,setScore,setDuelClicked,resultShown]);
+  // },[socket,setRound,setScore,setDuelClicked,resultReq]);
+  // const roundNumbers = 5;
   useEffect(()=>{
     if(socket){
-      if(round===roundNumbers && !resultReq){
-        socket.emit("endGame",{});
-        setResultReq(true);
-        console.log("triggered request endgame");
+      // if(round===roundNumbers && !resultReq ){
+      //   socket.emit("endGame",{});
+      //   setResultReq(true);
+      //   console.log("triggered request endgame");
 
-      }
+      // }
       if(!resultShown){
         socket.on("finResult",(data)=>{
           console.log("triggered");
-          if(data.win){
-            alert(`Congratulations you won`);
-          }else{
-            alert(`Sorry you lost`);
-          }
+          // if(data.win){
+          //   alert(`Congratulations you won`);
+          // }else{
+          //   alert(`Sorry you lost`);
+          // }
           setResultShown(true);
+          setNext(true);
         })
+
+
     }
     }
-  },[round,socket,setResultReq,resultReq,setResultShown,resultShown])
+  },[round,socket,setResultShown,resultShown,setNext])
+  // },[round,socket,setResultReq,resultReq,setResultShown,resultShown])
 
   return (
     <div>
@@ -55,6 +68,7 @@ export default function Duel({score, setScore ,socket,round,setRound,setDuelClic
         
       }
       current round: {round}
+
     </div>
   )
 }

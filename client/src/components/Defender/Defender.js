@@ -3,6 +3,7 @@ import "./Defender.css"
 import DefenseList from "../../Data/DefendList.json"
 import { useEffect,useState } from "react";
 import Duel from '../Duel/Duel';
+import GameAnalysis from '../gameAnalysis/GameAnalysis';
 // import io from 'socket.io-client'    
 
 // const socket = io.connect("http://localhost:3001")
@@ -28,6 +29,7 @@ function Defender({socket,roomId}) {
 
     const [duelClicked,setDuelClicked] = useState(false);
     const [score,setScore]=useState([]);
+    const [gameAnalysis, setGameAnalysis] = useState(null);
 
     const handleSelected = (id)=>{
         setSelected(id);
@@ -46,12 +48,19 @@ function Defender({socket,roomId}) {
         }
 
     }
+    const handleAnalysis = ()=>{
+        socket.emit( "analysis",{});
 
+    }
     useEffect(()=>{
         if(socket){
             socket.on("recieve_message",(data)=>{
             setMessageRecieved(data.message);
             });
+            socket.on("analysisSend",(data)=>{
+                // console.log(data);
+                setGameAnalysis(data);
+            })
         }
 
     },[socket])
@@ -88,7 +97,13 @@ function Defender({socket,roomId}) {
                 next = {next}
                 />
             </div>):(
-                ""
+
+                <div className='analysis'>
+
+                    <h1 >Game Over</h1>
+                    <button onClick={handleAnalysis}>Game Analysis</button>
+                    <GameAnalysis gameAnalysis={gameAnalysis}/>
+                </div>
             )
                 }
             <div className='sideHUD' >
@@ -107,11 +122,12 @@ function Defender({socket,roomId}) {
                     next===false?(
 
                 <button className='goToQz' onClick={handleDuel} disabled={duelClicked} >
-                    <h3>Duel    </h3>
+                    <h3>{round ===5? "Result": "Duel"}    </h3>
                     Selected:{selected}
                 </button>
                     ):""
                 }
+                
             </div>
         </div>
       )
