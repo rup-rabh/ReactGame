@@ -1,0 +1,39 @@
+
+
+.question{
+    padding: 16px 0px;
+    font-size: 1.5em;
+    border-radius: 5px;
+    background-color: rgb(63 5 233 / 30%);
+}
+.options{
+    margin-top: 5px;
+    display: flex;
+    gap:5%;
+    justify-content: center;
+}
+
+.option{
+    display: flex;
+    align-items: center;
+    flex-basis: calc(25% - 20px);
+    padding: 3px;
+
+    transition: all 0.15s linear 0ms;
+}
+.option:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+
+  .radio-button{
+    background-color: blue;
+    width: 25px;
+    height: 25px;
+  }
+  label{
+    margin-left: 5px;
+  }
+  
+  

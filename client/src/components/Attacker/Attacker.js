@@ -1,10 +1,18 @@
 import React from 'react'
 import AttackList from '../../Data/AttackList.json'
 import "./Attacker.css"
+import { useEffect,useState } from "react";
+
+import Quiz from '../Quiz/Quiz';
+
+// const socket = io.connect("http://localhost:3001")
+
 // id , name , description , cost
-function AttackItem({item}){
+function AttackItem({item,handleSelected}){
+
     return (
-        <div className="attack-card">
+        <div className="attack-card" onClick={() =>handleSelected(item.id)}
+        >
             <div className='name'><h3>Name : {item.name}</h3></div>
             <div className='description'>description: <p>
                 {item.description}
@@ -13,23 +21,82 @@ function AttackItem({item}){
         </div>
     )
 }
-export default function Attacker() {
+export default function Attacker({socket,roomId}) {
+    const [message,setMessage]=useState('');
+    const [messageRecieved,setMessageRecieved]=useState('');
+    const [selected,setSelected] = useState(0) ;
+    const [next , setNext]=useState(false);
+
+    const handleSelected = (id)=>{
+        setSelected(id);
+    }
+    const sendMessage  = () =>{
+      socket.emit("send_message",{message,roomId}); //since both key and value are same
+    };
+    const handleNext = ()=> {
+        if(selected){
+            setNext((state)=>true);
+        }else{
+            alert("Select option")
+        }
+    }
+
+
+    useEffect(()=>{
+        if(socket){
+            socket.on("recieve_message",(data)=>{
+            setMessageRecieved(data.message);
+            })
+        }
+    },[socket])
+
   return (
     <div className='attacker'>
-        <h1>Attacker Intro: </h1>
-        <p>Choose your attacker type</p>
-        <div className='attacks'>
-            {
-            AttackList.map((item)=>{
-                return(
-                    <AttackItem 
-                    key={item.id} 
-                    item = {item}    
-                    />
-                    )
+        {
+        next===false?(
+        <div>
+            <h1>ATTACKER'S CHOICES </h1>
+            <p>CHOOSE YOUR ATTACK TYPE</p>
+            <div className='attacks'>
+                {
+                    AttackList.map((item)=>{
+                        return(
+                            <AttackItem 
+                            key={item.id} 
+                            item = {item}
+                            handleSelected={handleSelected}    
+                            />
+                        )
                     })
-            }
-        </div>
+                }
+            </div>
+        </div>  ):(
+                <div className='attacks'>
+                    <Quiz socket={socket} roomId={roomId} role={"Attacker"} selected={selected}/>
+                </div>
+            )
+        
+        }
+        <div className='sideHUD' >
+                <div className='chat' style={{color:"lightgreen"}}>
+
+                <input placeholder='Message...' onChange={(event)=>{
+                    setMessage(event.target.value);
+                }}/>
+                <button className='test-btn' onClick={sendMessage}>SEND</button>
+                <h2>Message:</h2>
+                {messageRecieved}
+                </div>
+                {
+                    next===false?(
+
+                <div className='goToQz' onClick={handleNext} >
+                    <h3>Next    </h3>
+                    Selected:{selected}
+                </div>
+                    ):""
+                }
+            </div>
     </div>
   )
 }

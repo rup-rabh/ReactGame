@@ -1,0 +1,39 @@
+
+.finWin{
+    background-color: green;
+    margin: 12px 0px;
+    padding: 26px;
+    font-weight: bolder;
+    border-radius: 10px;
+}
+.finLos{
+    background-color: red;
+    margin: 12px 0px;
+    padding: 26px;
+    font-weight: bolder;
+    border-radius: 10px;
+}
+.engagement{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    font-size: 30px;
+}
+.countDown{
+    font-size: 2rem;
+    font-weight: bolder;
+    color: aliceblue;
+    background-color: blueviolet;
+    padding: 8px 40px;
+    border-radius: 10px;
+}
+#cnt{
+    font-size: 10rem;
+    margin: 2px;
+    text-shadow: 5px 5px 8px #0022ff;
+}
+.para{
+    font-weight: bolder;
+}

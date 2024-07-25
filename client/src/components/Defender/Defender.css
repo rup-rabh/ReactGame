@@ -1,33 +1,52 @@
 .defender{
     color:var(--defender-text) ;
-    background-color: var(--defender-background);
-}
+    /* background-color: var(--defender-background); */
+    /* background-image: linear-gradient(to bottom right, rgb(89, 0, 255), rgb(255, 0, 255)); */
+    background-image: radial-gradient(circle, rgb(0, 255, 200), rgb(111, 0, 128));
+    display: flex;
+
+    
+  }
 .defense{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
+    flex:9 ;   
+    /* background-color: #1c8df7; */
 }
 
 .defense-card{
     flex-basis: calc(33% - 20px);
     border: 2px solid #ccc;
-    border-radius: 8px;
+    /* border-radius: 15px 50px; */
     padding: 16px;
     margin-bottom: 20px;
-    /* background-color: var(--attacker-primary); */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: box-shadow 0.4s ease;
+    background-color: var(--defender-primary);
+    /* border: 10px solid transparent;
+    border-image: url("../../Data/UI/demoBI.png") 30% round; */
+    border: 5px solid red;
+    border-image: linear-gradient(blue, red) 1;
+  
+
 }
+
+.defense-card:hover {
+  box-shadow: 0 20px 20px rgb(0, 0, 0);
+}
+
 
 .defense-card .cost {
     margin: auto;
     
     width: 50%;
     font-weight: bold;
-    background-color: rgb(72, 255, 0);
-    
+    padding: 6px;
+    background-color: red;    
     border-radius: 10px;
   }
 
@@ -38,3 +57,32 @@
   .defense-card p {
     margin: 8px 0;
   }
+
+  /* SideHud */
+  .sideHUD{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;  
+    position: relative;
+    /* top:50%; */
+    right: 0;
+    flex: 1;
+  }
+
+  .goToQz{
+
+    background-color:green;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    padding: 6px 2px;
+    
+  }
+  .goToQz h3{
+    margin: 6px 0px;
+  }
+
+
+.goToQz:hover{
+  background-color: rgb(106, 0, 255);
+}
